@@ -24,7 +24,7 @@ namespace bit_bytes
 
         int autoClickDelay = 10000;
         int clickcount = 1;
-        float clickScore = 10;
+        float clickScore = 1;
         int upgradeCost = 10;
         int AutoClickValue = 1;
 
@@ -70,7 +70,14 @@ namespace bit_bytes
             if(Ram.ClickScore > Ram.UpgradeCost) {
                 Ram.ClickScore = Ram.ClickScore - Ram.UpgradeCost;
                 Ram.ClickCount++;
-                Ram.UpgradeCost++;
+               
+                if(Ram.UpgradeCost <100){
+                    Ram.UpgradeCost++;
+                } else {
+                    double temp = (Ram.UpgradeCost * .50);
+                    Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
+                }
+
             }
            
         }
@@ -98,10 +105,23 @@ namespace bit_bytes
                 thread1.Start();
                 Thread1Button.Visibility = Visibility.Hidden;
 
-                Ram.UpgradeCost = Ram.UpgradeCost * 3;
+              
+                if(Ram.UpgradeCost <100){
+                    Ram.UpgradeCost++;
+                } else {
+                    double temp = (Ram.UpgradeCost * .50);
+                    Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
+                }
+
             }
         }
 
+
+        /// <summary>
+        /// This Method upgrades the thread delay by decreasing the waittime built in on the thread
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Thread_Delay_Down_Click(object sender, RoutedEventArgs e)
         {
             if(Ram.ClickScore> Ram.UpgradeCost)
@@ -110,11 +130,24 @@ namespace bit_bytes
                 Ram.AutoClickDelay = Ram.AutoClickDelay - Convert.ToInt32(temp);
 
                 Ram.ClickScore -= Ram.UpgradeCost;
-                Ram.UpgradeCost = Ram.UpgradeCost * 2;
+               
+                if(Ram.UpgradeCost <100){
+                    Ram.UpgradeCost++;
+                } else {
+                    double temp2 = (Ram.UpgradeCost * .50);
+                    Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
+                }
+
 
             }
         }
 
+
+        /// <summary>
+        /// This method increases the value given by upgrades
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ValueUpgrade_Click(object sender, RoutedEventArgs e)
         {
             if(Ram.ClickScore > Ram.UpgradeCost)
@@ -122,6 +155,14 @@ namespace bit_bytes
                 Ram.AutoClickValue++;
 
                 Ram.ClickScore -= Ram.UpgradeCost;
+
+
+                if(Ram.UpgradeCost <100){
+                    Ram.UpgradeCost++;
+                } else {
+                    double temp = (Ram.UpgradeCost * .50);
+                    Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
+                }
 
             }
         }

@@ -81,6 +81,9 @@ namespace bit_bytes
 
         //This is the value that an auto clicker increments the number by
         private int autoclickValue;
+
+       
+
         /// <summary>
         /// getters and setters for the autoclickValue
         /// </summary>
@@ -92,7 +95,7 @@ namespace bit_bytes
 
 
         //this is the property changed handler
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
