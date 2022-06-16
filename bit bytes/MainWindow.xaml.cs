@@ -28,6 +28,10 @@ namespace bit_bytes
         int upgradeCost = 10;
         int AutoClickValue = 1;
 
+
+
+        
+
         //this is the ram object, well be using it to maintain everything else in one data source
         ClickerStats Ram;
 
@@ -67,18 +71,20 @@ namespace bit_bytes
         /// <param name="e"></param>
         private void UpgradeClicker_Click(object sender, RoutedEventArgs e)
         {
-            if(Ram.ClickScore > Ram.UpgradeCost) {
-                Ram.ClickScore = Ram.ClickScore - Ram.UpgradeCost;
-                Ram.ClickCount++;
+            //if(Ram.ClickScore > Ram.UpgradeCost) {
+            //    Ram.ClickScore = Ram.ClickScore - Ram.UpgradeCost;
+            //    Ram.ClickCount++;
                
-                if(Ram.UpgradeCost <100){
-                    Ram.UpgradeCost++;
-                } else {
-                    double temp = (Ram.UpgradeCost * .50);
-                    Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
-                }
+            //    if(Ram.UpgradeCost <100){
+            //        Ram.UpgradeCost++;
+            //    } else {
+            //        double temp = (Ram.UpgradeCost * .50);
+            //        Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
+            //  }
 
-            }
+            //}
+
+            if(Ram.ClickScore
            
         }
 
