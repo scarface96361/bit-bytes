@@ -14,13 +14,13 @@
     <Grid>
         <TextBlock x:Name="clickScoredisplay" HorizontalAlignment="Left" Margin="167,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="97" Width="551" FontSize="72" IsEnabled="False" Grid.Column="1" Text="{Binding ClickScore}"/>
         <Button Content="Click me!" HorizontalAlignment="Left" Margin="167,184,0,0" VerticalAlignment="Top" Height="116" Width="161" FontSize="36" FontFamily="Algerian" Click="Button_Click_Increment" Grid.Column="1"/>
-        <Button x:Name="UpgradeClicker" Content="Upgrade your ram" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="38" Width="155" Click="UpgradeClicker_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="UpgradeClicker" Content="Upgrade your ram"  HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="38" Width="155" Click="UpgradeClicker_Click" Grid.ColumnSpan="2" />
         <TextBox HorizontalAlignment="Left" Margin="20,17,0,0" TextWrapping="Wrap" Text="{Binding UpgradeCost}" VerticalAlignment="Top" Width="101"/>
-        <Button x:Name="Thread1Button" Content="Work in progress&#xD;&#xA;Multithreading!" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Height="43" Width="155" Click="Thread1Button_Click"/>
-        <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="Cost to upgrade!&#xA;" VerticalAlignment="Top" Width="120" Height="17"/>
-        <Button x:Name="Thread_Delay_Down" Content="Decrease the amount of &#xD;&#xA;time between autoclicks" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Height="43" Width="152" Click="Thread_Delay_Down_Click"/>
-        <Button x:Name="ValueUpgrade" Content="Increase the Autoclick&#xD;&#xA;Value" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Height="38" Width="152" Click="ValueUpgrade_Click"/>
-
-
+        <Button x:Name="Thread1Button" Content="Work in progress Multithreading!" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Height="43" Width="155" Click="Thread1Button_Click"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="Cost to upgrade!" VerticalAlignment="Top" Width="120" Height="17"/>
+        <Button x:Name="Thread_Delay_Down" Content="Decrease the amount of time between autoclicks" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Height="43" Width="152" Click="Thread_Delay_Down_Click"/>
+        <Button x:Name="ValueUpgrade"  HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Height="38" Width="152" Click="ValueUpgrade_Click"> 
+            <TextBlock TextWrapping = "Wrap"/>
+        </Button>
     </Grid>
 </Window>

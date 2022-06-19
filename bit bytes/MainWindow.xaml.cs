@@ -35,6 +35,7 @@ namespace bit_bytes
         //this is the ram object, well be using it to maintain everything else in one data source
         ClickerStats Ram;
 
+        UpgradeCosts upgradeKit;
 
         public MainWindow()
         {
@@ -45,8 +46,7 @@ namespace bit_bytes
             Ram.UpgradeCost = upgradeCost;
             Ram.ClickCount = clickcount;
             Ram.AutoClickValue = AutoClickValue;
-
-
+            upgradeKit = new UpgradeCosts();
             InitializeComponent();
             //clickScoredisplay.Text = clickScore.ToString();
             DataContext = Ram;
@@ -84,7 +84,16 @@ namespace bit_bytes
 
             //}
 
-            if(Ram.ClickScore
+            if(Ram.ClickScore >= upgradeKit.ClickUpgrade)
+            {
+                Ram.ClickCount++;
+                
+                Ram.ClickScore -= upgradeKit.ClickUpgrade;
+
+                upgradeKit.ClickUpgrade = upgradeKit.ClickUpgrade + 1;
+
+                UpgradeClicker.Content = "Cost of Ram" + upgradeKit.ClickUpgrade;
+            }
            
         }
 
@@ -97,7 +106,7 @@ namespace bit_bytes
         /// <param name="e"></param>
         private void Thread1Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Ram.ClickScore > Ram.UpgradeCost)
+            if (Ram.ClickScore >= Ram.UpgradeCost)
             {
 
                 Ram.ClickScore = Ram.ClickScore - Ram.UpgradeCost;
@@ -117,8 +126,8 @@ namespace bit_bytes
                 } else {
                     double temp = (Ram.UpgradeCost * .50);
                     Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
-                }
-
+                }   
+                
             }
         }
 
@@ -130,7 +139,7 @@ namespace bit_bytes
         /// <param name="e"></param>
         private void Thread_Delay_Down_Click(object sender, RoutedEventArgs e)
         {
-            if(Ram.ClickScore> Ram.UpgradeCost)
+            if(Ram.ClickScore >= Ram.UpgradeCost)
             {
                 double temp = (Ram.AutoClickDelay * .10); 
                 Ram.AutoClickDelay = Ram.AutoClickDelay - Convert.ToInt32(temp);
@@ -156,19 +165,21 @@ namespace bit_bytes
         /// <param name="e"></param>
         private void ValueUpgrade_Click(object sender, RoutedEventArgs e)
         {
-            if(Ram.ClickScore > Ram.UpgradeCost)
+            if(Ram.ClickScore >= upgradeKit.AutoValueCost)
             {
                 Ram.AutoClickValue++;
 
-                Ram.ClickScore -= Ram.UpgradeCost;
+                Ram.ClickScore -= upgradeKit.AutoValueCost;
 
 
-                if(Ram.UpgradeCost <100){
-                    Ram.UpgradeCost++;
+                if(upgradeKit.AutoValueCost <100){
+                    upgradeKit.AutoValueCost++;
                 } else {
-                    double temp = (Ram.UpgradeCost * .50);
-                    Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
+                    double temp = (upgradeKit.AutoValueCost * .50);
+                    upgradeKit.AutoValueCost = upgradeKit.AutoValueCost + Convert.ToInt32(temp);
                 }
+
+                ValueUpgrade.Content = "Upgrade the Thread Priority!" + "\nCost of Ram" + upgradeKit.AutoValueCost;
 
             }
         }
