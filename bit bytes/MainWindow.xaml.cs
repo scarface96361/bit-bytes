@@ -29,27 +29,30 @@ namespace bit_bytes
         int AutoClickValue = 1;
 
 
+        //the following variables will be used to store if certain buttons have already been pushed
+        bool AutoClickEnabled = false;
 
         
 
         //this is the ram object, well be using it to maintain everything else in one data source
-        ClickerStats Ram;
+        ClickerStats Values;
 
-        UpgradeCosts upgradeKit;
+        //this object stores the costs of upgrading
+        UpgradeCosts upgradecosts;
 
         public MainWindow()
         {
             //here we initiallize the ram object
-            Ram = new ClickerStats();
-            Ram.AutoClickDelay = autoClickDelay;
-            Ram.ClickScore = clickScore;
-            Ram.UpgradeCost = upgradeCost;
-            Ram.ClickCount = clickcount;
-            Ram.AutoClickValue = AutoClickValue;
-            upgradeKit = new UpgradeCosts();
+            Values = new ClickerStats();
+            Values.AutoClickDelay = autoClickDelay;
+            Values.ClickScore = clickScore;
+            Values.UpgradeCost = upgradeCost;
+            Values.ClickCount = clickcount;
+            Values.AutoClickValue = AutoClickValue;
+            upgradecosts = new UpgradeCosts();
             InitializeComponent();
             //clickScoredisplay.Text = clickScore.ToString();
-            DataContext = Ram;
+            DataContext = Values;
         }
 
 
@@ -60,7 +63,7 @@ namespace bit_bytes
         /// <param name="e"></param>
         private void Button_Click_Increment(object sender, RoutedEventArgs e)
         {
-            Ram.ClickScore = Ram.ClickScore + Ram.ClickCount;
+            Values.ClickScore = Values.ClickScore + Values.ClickCount;
             //clickScoredisplay.Text = Ram.ClickScore.ToString();
         }
 
@@ -71,28 +74,17 @@ namespace bit_bytes
         /// <param name="e"></param>
         private void UpgradeClicker_Click(object sender, RoutedEventArgs e)
         {
-            //if(Ram.ClickScore > Ram.UpgradeCost) {
-            //    Ram.ClickScore = Ram.ClickScore - Ram.UpgradeCost;
-            //    Ram.ClickCount++;
-               
-            //    if(Ram.UpgradeCost <100){
-            //        Ram.UpgradeCost++;
-            //    } else {
-            //        double temp = (Ram.UpgradeCost * .50);
-            //        Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
-            //  }
+           
 
-            //}
-
-            if(Ram.ClickScore >= upgradeKit.ClickUpgrade)
+            if(Values.ClickScore >= upgradecosts.ClickUpgrade)
             {
-                Ram.ClickCount++;
+                Values.ClickCount++;
                 
-                Ram.ClickScore -= upgradeKit.ClickUpgrade;
+                Values.ClickScore -= upgradecosts.ClickUpgrade;
 
-                upgradeKit.ClickUpgrade = upgradeKit.ClickUpgrade + 1;
+                upgradecosts.ClickUpgrade = upgradecosts.ClickUpgrade + 1;
 
-                UpgradeClicker.Content = "Cost of Ram" + upgradeKit.ClickUpgrade;
+                UpgradeClicker.Content = "Cost of Ram " + upgradecosts.ClickUpgrade;
             }
            
         }
@@ -106,53 +98,70 @@ namespace bit_bytes
         /// <param name="e"></param>
         private void Thread1Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Ram.ClickScore >= Ram.UpgradeCost)
+            if (AutoClickEnabled == false)
             {
 
-                Ram.ClickScore = Ram.ClickScore - Ram.UpgradeCost;
+                if (Values.ClickScore >= upgradecosts.timeinterval)
+                {
+
+                    Values.ClickScore = Values.ClickScore - upgradecosts.timeinterval;
 
 
-                //the following two lines of code create a threadmethods object then pass its primary thread to a thread object
-                Thread_methods th = new Thread_methods(Ram);
-                Thread thread1 = new Thread(new ThreadStart(th.RamThread));
+                    //the following two lines of code create a threadmethods object then pass its primary thread to a thread object
+                    Thread_methods th = new Thread_methods(Values);
+                    Thread thread1 = new Thread(new ThreadStart(th.RamThread));
 
-                //this starts the thread running
-                thread1.Start();
-                Thread1Button.Visibility = Visibility.Hidden;
+                    //this starts the thread running
+                    thread1.Start();
+                    //Thread1Button.Visibility = Visibility.Hidden;
 
-              
-                if(Ram.UpgradeCost <100){
-                    Ram.UpgradeCost++;
-                } else {
-                    double temp = (Ram.UpgradeCost * .50);
-                    Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
-                }   
-                
+
+                    if (upgradecosts.timeinterval < 100)
+                    {
+                        upgradecosts.timeinterval++;
+                    }
+                    else
+                    {
+                        double temp = (upgradecosts.timeinterval * .50);
+                        upgradecosts.timeinterval = upgradecosts.timeinterval + Convert.ToInt32(temp);
+                    }
+                    Thread1ButtonText.Text = "Upgrade the Autoclicker Delay Cost " + upgradecosts.timeinterval;
+
+
+                }
+
+                //this line sets the autoclick enabled true so the above code will only run once per program load
+                AutoClickEnabled = true;
+            }// if autoClickEnabled is true then this method will instead call to reduce the thread delay
+            else
+            {
+                ThreadDelayReducer();
             }
         }
 
 
         /// <summary>
-        /// This Method upgrades the thread delay by decreasing the waittime built in on the thread
+        /// this method reduces the thread wait time by 10% 
+        /// 
+        /// This is part of a refactor im currently implementing. it may be moved over to its own class and object at a later date but for now it exists in main.
+        /// We will see how i refactor in the future
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Thread_Delay_Down_Click(object sender, RoutedEventArgs e)
+        private void ThreadDelayReducer()
         {
-            if(Ram.ClickScore >= Ram.UpgradeCost)
+            if(Values.ClickScore >= upgradecosts.timeinterval)
             {
-                double temp = (Ram.AutoClickDelay * .10); 
-                Ram.AutoClickDelay = Ram.AutoClickDelay - Convert.ToInt32(temp);
+                double temp = (Values.AutoClickDelay * .10); 
+                Values.AutoClickDelay = Values.AutoClickDelay - Convert.ToInt32(temp);
 
-                Ram.ClickScore -= Ram.UpgradeCost;
+                Values.ClickScore -= Values.UpgradeCost;
                
-                if(Ram.UpgradeCost <100){
-                    Ram.UpgradeCost++;
+                if(upgradecosts.timeinterval < 100){
+                    upgradecosts.timeinterval++;
                 } else {
-                    double temp2 = (Ram.UpgradeCost * .50);
-                    Ram.UpgradeCost = Ram.UpgradeCost + Convert.ToInt32(temp);
+                    double temp2 = (upgradecosts.timeinterval * .50);
+                    upgradecosts.timeinterval = upgradecosts.timeinterval + Convert.ToInt32(temp2);
                 }
-
+                Thread1ButtonText.Text = "Upgrade the Autoclicker Delay Cost " + upgradecosts.timeinterval;
 
             }
         }
@@ -165,21 +174,21 @@ namespace bit_bytes
         /// <param name="e"></param>
         private void ValueUpgrade_Click(object sender, RoutedEventArgs e)
         {
-            if(Ram.ClickScore >= upgradeKit.AutoValueCost)
+            if(Values.ClickScore >= upgradecosts.AutoValueCost)
             {
-                Ram.AutoClickValue++;
+                Values.AutoClickValue++;
 
-                Ram.ClickScore -= upgradeKit.AutoValueCost;
+                Values.ClickScore -= upgradecosts.AutoValueCost;
 
 
-                if(upgradeKit.AutoValueCost <100){
-                    upgradeKit.AutoValueCost++;
+                if(upgradecosts.AutoValueCost <100){
+                    upgradecosts.AutoValueCost++;
                 } else {
-                    double temp = (upgradeKit.AutoValueCost * .50);
-                    upgradeKit.AutoValueCost = upgradeKit.AutoValueCost + Convert.ToInt32(temp);
+                    double temp = (upgradecosts.AutoValueCost * .50);
+                    upgradecosts.AutoValueCost = upgradecosts.AutoValueCost + Convert.ToInt32(temp);
                 }
 
-                ValueUpgrade.Content = "Upgrade the Thread Priority!" + "\nCost of Ram" + upgradeKit.AutoValueCost;
+                ValueUpgrade.Text = "Upgrade the Thread Priority! " + "Cost of Ram " + upgradecosts.AutoValueCost;
 
             }
         }
