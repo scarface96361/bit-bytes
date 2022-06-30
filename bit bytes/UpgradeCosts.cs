@@ -13,18 +13,8 @@ namespace bit_bytes
             get { return clickUpgrade; } 
             set { clickUpgrade = value; }
         }
-         /// <summary>
-        /// IncrementClickUpgrade increments the ClickUpgrade variable
-        /// 
-        /// If you wish to rebalance the game, tweak the increment cost and in the other increment methods in the UpgradeCosts class. 
-        /// </summary>
-        public void IncrementClickUpgrade()
-        {
-            
-        }
 
-
-
+        
         //The following 20 or so of the current code is all code relating to the cost of the interval
         //this interval is used to determine how often the thread increments. 
         int IntervalCosts = 10;
@@ -33,27 +23,7 @@ namespace bit_bytes
             get { return IntervalCosts; }
             set { IntervalCosts = value; }
         }
-        /// <summary>
-        /// IncrementTimeIntervalCost increments the IntervalCosts variable
-        /// 
-        /// If you wish to rebalance the game, tweak the increment cost and in the other increment methods in the UpgradeCosts class. 
-        /// </summary>
-        public void incrementTimeIntervalCost()
-        {
-            if (IntervalCosts < 100)
-            {
-              IntervalCosts++;
-            }
-            else
-            {
-                double temp2 = (IntervalCosts * .50);
-                IntervalCosts = IntervalCosts + Convert.ToInt32(temp2);
-            }
-        }
-
-
-
-
+        
         //the following variable is used to store the cost of upgrading the number of points received each click
         int autoValueCost = 20;
 
@@ -66,6 +36,34 @@ namespace bit_bytes
             set { autoValueCost = value;}
         }
 
+        //the following 3 methods are all handling incrementing the cost to upgrade. These are useful for rebalancing the game
+
+        /// <summary>
+        /// IncrementClickUpgrade increments the ClickUpgrade variable
+        /// 
+        /// If you wish to rebalance the game, tweak the increment cost and in the other increment methods in the UpgradeCosts class. 
+        /// </summary>
+        public void IncrementClickUpgrade()
+        {
+            clickUpgrade++;
+        }
+        /// <summary>
+        /// IncrementTimeIntervalCost increments the IntervalCosts variable
+        /// 
+        /// If you wish to rebalance the game, tweak the increment cost and in the other increment methods in the UpgradeCosts class. 
+        /// </summary>
+        public void incrementTimeIntervalCost()
+        {
+            if (IntervalCosts < 20)
+            {
+              IntervalCosts++;
+            }
+            else
+            {
+                double temp2 = (IntervalCosts * .50);
+                IntervalCosts = IntervalCosts + Convert.ToInt32(temp2);
+            }
+        }
         /// <summary>
         /// IncrementAutoValueCost increments the autoValueCost variable
         /// 
@@ -80,8 +78,6 @@ namespace bit_bytes
                 autoValueCost = autoValueCost + Convert.ToInt32(temp);
             }
         }
-
-
 
 
     }
