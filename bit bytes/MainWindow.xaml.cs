@@ -82,9 +82,10 @@ namespace bit_bytes
                 
                 Values.ClickScore -= upgradecosts.ClickUpgrade;
 
-                upgradecosts.ClickUpgrade = upgradecosts.ClickUpgrade + 1;
+                //the following line of code increments the cost to upgrade your click value. to balance please go to incrementClickUpgrade Method in UpgradeCosts
+                upgradecosts.IncrementClickUpgrade();
 
-                UpgradeClicker.Content = "Cost of Ram " + upgradecosts.ClickUpgrade;
+                UpgradeClicker.Text = "Upgrade the Value of manual Clicks  Cost:  " + upgradecosts.ClickUpgrade;
             }
            
         }
@@ -115,16 +116,7 @@ namespace bit_bytes
                     thread1.Start();
                     //Thread1Button.Visibility = Visibility.Hidden;
 
-
-                    if (upgradecosts.timeinterval < 100)
-                    {
-                        upgradecosts.timeinterval++;
-                    }
-                    else
-                    {
-                        double temp = (upgradecosts.timeinterval * .50);
-                        upgradecosts.timeinterval = upgradecosts.timeinterval + Convert.ToInt32(temp);
-                    }
+                    upgradecosts.incrementTimeIntervalCost();
                     Thread1ButtonText.Text = "Upgrade the Autoclicker Delay Cost " + upgradecosts.timeinterval;
 
 
@@ -154,13 +146,8 @@ namespace bit_bytes
                 Values.AutoClickDelay = Values.AutoClickDelay - Convert.ToInt32(temp);
 
                 Values.ClickScore -= Values.UpgradeCost;
-               
-                if(upgradecosts.timeinterval < 100){
-                    upgradecosts.timeinterval++;
-                } else {
-                    double temp2 = (upgradecosts.timeinterval * .50);
-                    upgradecosts.timeinterval = upgradecosts.timeinterval + Convert.ToInt32(temp2);
-                }
+
+                upgradecosts.incrementTimeIntervalCost();
                 Thread1ButtonText.Text = "Upgrade the Autoclicker Delay Cost " + upgradecosts.timeinterval;
 
             }
@@ -180,14 +167,8 @@ namespace bit_bytes
 
                 Values.ClickScore -= upgradecosts.AutoValueCost;
 
-
-                if(upgradecosts.AutoValueCost <100){
-                    upgradecosts.AutoValueCost++;
-                } else {
-                    double temp = (upgradecosts.AutoValueCost * .50);
-                    upgradecosts.AutoValueCost = upgradecosts.AutoValueCost + Convert.ToInt32(temp);
-                }
-
+                //this line of code calls to increment the autoclicker value in the upgradeCosts Class
+                upgradecosts.IncrementAutoValueCost();
                 ValueUpgrade.Text = "Upgrade the Thread Priority! " + "Cost of Ram " + upgradecosts.AutoValueCost;
 
             }
